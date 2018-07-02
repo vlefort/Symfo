@@ -1,3 +1,8 @@
+.idea/
+.atom/
+.svn
+.DS_Store
+[Tt]humbs.db
 
 ###> symfony/framework-bundle ###
 /.env
