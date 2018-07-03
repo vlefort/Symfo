@@ -6,7 +6,7 @@ use App\Entity\Commentary;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class TestController extends Controller
+class CommentaryController extends Controller
 {
     /**
      * @Route("/test")
@@ -14,7 +14,7 @@ class TestController extends Controller
     public function createFakeCommentary()
     {
         $comment = new Commentary();
-        $comment->setMessage();
+        $comment->setMessage(file_get_contents('http://loripsum.net/api'));
         $comment->setAuteur(2);
         $comment->setPublishDate(new \DateTime());
 

@@ -1,12 +1,43 @@
 // assets/css/global.scss
 
 // customize some Bootstrap variables
-$primary: darken(#2e20ca, 20%);
 
 // the ~ allows you to reference things in node_modules
 @import "../node_modules/bootstrap/scss/bootstrap";
 
+$enable-shadows:            true;
+$enable-rounded:            true;
+
+@keyframes BallonLogo {
+  From {transform: rotate(0turn);}
+  To {transform: rotate(1turn);}
+}
+
 .main-logo {
   margin-right: 2rem;
   width: 6rem;
+  transition: 0.3s ease-in;
+
+  &:hover{
+    transform: scale(1.1);
+  }
 }
+
+.main-logo-animate {
+  -webkit-transform-origin: 50% 50%;
+  -moz-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  -o-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  animation: BallonLogo 2s linear infinite;
+}
+
+    .background-banner {
+      background-image: url(/images/bar.jpeg);
+      background-size: cover;
+      background-position: 10% 20%;
+    }
+
+    .commentary-item {
+      margin-top: 3rem;
+    }
