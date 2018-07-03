@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bars{% endblock %}
+
+{% block body %}
+    <h1>Bars</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ bar.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ bar.Nom }}</td>
+            </tr>
+            <tr>
+                <th>Alcools</th>
+                <td>{{ bar.Alcools }}</td>
+            </tr>
+            <tr>
+                <th>Diffusions</th>
+                <td>{{ bar.Diffusions ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Terasse</th>
+                <td>{{ bar.Terasse ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ bar.Adresse }}</td>
+            </tr>
+            <tr>
+                <th>Photos</th>
+                <td>{{ bar.Photos }}</td>
+            </tr>
+            <tr>
+                <th>Notations</th>
+                <td>{{ bar.Notations }}</td>
+            </tr>
+            <tr>
+                <th>Commentaires</th>
+                <td>{{ bar.Commentaires }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('bars_index') }}">back to list</a>
+
+    <a href="{{ path('bars_edit', {'id': bar.id}) }}">edit</a>
+
+    {{ include('bars/_delete_form.html.twig') }}
+{% endblock %}

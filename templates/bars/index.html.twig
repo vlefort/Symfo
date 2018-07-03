@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bars index{% endblock %}
+
+{% block body %}
+    <h1>Bars index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Alcools</th>
+                <th>Diffusions</th>
+                <th>Terasse</th>
+                <th>Adresse</th>
+                <th>Photos</th>
+                <th>Notations</th>
+                <th>Commentaires</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for bar in bars %}
+            <tr>
+                <td>{{ bar.id }}</td>
+                <td>{{ bar.Nom }}</td>
+                <td>{{ bar.Alcools }}</td>
+                <td>{{ bar.Diffusions ? 'Yes' : 'No' }}</td>
+                <td>{{ bar.Terasse ? 'Yes' : 'No' }}</td>
+                <td>{{ bar.Adresse }}</td>
+                <td>{{ bar.Photos }}</td>
+                <td>{{ bar.Notations }}</td>
+                <td>{{ bar.Commentaires }}</td>
+                <td>
+                    <a href="{{ path('bars_show', {'id': bar.id}) }}">show</a>
+                    <a href="{{ path('bars_edit', {'id': bar.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('bars_new') }}">Create new</a>
+{% endblock %}
