@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class HelloController extends Controller
 {
     /**
-     * @Route("/hello/{name}", defaults={"name"="World"})
+     * @Route("/{name}", defaults={"name"="World"})
      */
-    public function hello($name)
+    public function index($name)
     {
         return $this->render('hello/index.html.twig', [
             'name' => $name
