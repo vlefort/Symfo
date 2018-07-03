@@ -7,6 +7,9 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 
 class ConnexionController extends Controller
 {
@@ -25,8 +28,7 @@ class ConnexionController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
-            //return $this->redirectToRoute('login');
+            return $this->redirectToRoute('replace_with_some_route');
         }
 
 
