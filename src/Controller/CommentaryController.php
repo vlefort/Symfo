@@ -14,7 +14,7 @@ class TestController extends Controller
     public function createFakeCommentary()
     {
         $comment = new Commentary();
-        $comment->setMessage("test");
+        $comment->setMessage();
         $comment->setAuteur(2);
         $comment->setPublishDate(new \DateTime());
 

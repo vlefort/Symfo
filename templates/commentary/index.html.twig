@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Hello{% endblock %}
+{% block description %} {% endblock %}
+{% block keywords %} {% endblock %}
+{% block body %}
+    <div class="container">
+        <ul class="list-unstyled mt-3">
+            {% for comment in comments %}
+                <li class="media shadow p-3 mb-3 bg-white rounded">
+                    <div class="media-body">
+                        <h5 class="mt-0 mb-1 text-primary">
+                            Auteur : {{ comment.auteur }}
+                        </h5>
+                        {{ comment.message|raw }}
+                        <span class="text-muted">Date de publication : {{ comment.PublishDate|date("d/m/Y") }}</span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
