@@ -27,7 +27,7 @@ class Utilisateurs
     private $Login;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=200)
      */
     private $Mdp;
 

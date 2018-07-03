@@ -5,3 +5,8 @@ $primary: darken(#2e20ca, 20%);
 
 // the ~ allows you to reference things in node_modules
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+.main-logo {
+  margin-right: 2rem;
+  width: 6rem;
+}
