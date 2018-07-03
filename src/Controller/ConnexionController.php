@@ -19,25 +19,14 @@ class ConnexionController extends Controller
 
     public function connexion(Request $request, AuthenticationUtils $authenticationUtils)
     {
-        $authenticationUtils = $this->get('security.authentication_utils');
-        $erreur = $authenticationUtils->getLastAuthenticationError();
-        $dernierUser = $authenticationUtils->getLastUsername();
 
-        $Utilisateurs = new Utilisateurs();
-        $form = $this->createForm(AccountLoginType::class, $Utilisateurs);
+    $error = $authenticationUtils->getLastAuthenticationError();
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            return $this->redirectToRoute('replace_with_some_route');
-        }
+    $lastUsername = $authenticationUtils->getLastUsername();
 
-
-        return $this->render(
-            'login/login.html.twig',array(
-                'form' => $form->createView(),
-                'dernier_user' => $dernierUser,
-                'erreur' => $erreur,
-                )
-        );
+    return $this->render('login/login.html.twig', array(
+        'last_username' => $lastUsername,
+        'error'         => $error,
+    ));
     }
 }

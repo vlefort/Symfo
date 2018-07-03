@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Utilisateurs;
+use App\Entity\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -16,7 +16,7 @@ class UtilisateursRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Utilisateurs::class);
+        parent::__construct($registry, Users::class);
     }
 
 //    /**

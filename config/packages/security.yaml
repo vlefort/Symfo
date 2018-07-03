@@ -1,13 +1,13 @@
 security:
     encoders:
+        App\Entity\Users:
             algorithm: bcrypt
-            cost: 12
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
          our_db_provider:
             entity:
-                class: App\Entity\Utilisateurs
-                property: Login
+                class: App\Entity\Users
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -33,3 +33,4 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }
