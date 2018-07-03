@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class HelloController extends Controller
 {
     /**
-     * @Route("/", defaults={"name"="World"})
+     * @Route("/{name}", name="HomePage", defaults={"name"="homePage"})
      */
     public function index($name)
     {

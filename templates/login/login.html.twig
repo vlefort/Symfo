@@ -1,11 +1,19 @@
-{{ form_start(form) }}
-    {{ form_row(form.Login) }}
-    {{ form_row(form.Mdp) }}
+{% if erreur %}
+    <div>{{ erreur.messageKey|trans(erreur.messageData, 'security') }}</div>
+{% endif %}
 
+<form action="{{ path('login') }}" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="_username" value="{{ dernier_user }}" />
 
-	<input type="hidden" name="login" value="/" />
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="_password" />
 
-    <button type="submit">Se connecter !</button>
+    {#
+        If you want to control the URL the user
+        is redirected to on success (more details below)
+        <input type="hidden" name="_target_path" value="{{ path('homePage') }}" />
+    #}
 
-
-{{ form_end(form) }} 
+    <button type="submit">login</button>
+</form>

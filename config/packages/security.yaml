@@ -1,7 +1,7 @@
 security:
     encoders:
-        App\Entity\Utilisateurs:
             algorithm: bcrypt
+            cost: 12
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
          our_db_provider:
@@ -13,12 +13,11 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            anonymous: ~
             form_login:
                 login_path: login
                 check_path: login
                 post_only:  true
-                default_target_path: logged
 
             # activate different ways to authenticate
 
