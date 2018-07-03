@@ -1,49 +1,32 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Bars index{% endblock %}
+{% set count = 0 %}
 
 {% block body %}
-    <h1>Bars index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Alcools</th>
-                <th>Diffusions</th>
-                <th>Terasse</th>
-                <th>Adresse</th>
-                <th>Photos</th>
-                <th>Notations</th>
-                <th>Commentaires</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for bar in bars %}
-            <tr>
-                <td>{{ bar.id }}</td>
-                <td>{{ bar.Nom }}</td>
-                <td>{{ bar.Alcools }}</td>
-                <td>{{ bar.Diffusions ? 'Yes' : 'No' }}</td>
-                <td>{{ bar.Terasse ? 'Yes' : 'No' }}</td>
-                <td>{{ bar.Adresse }}</td>
-                <td>{{ bar.Photos }}</td>
-                <td>{{ bar.Notations }}</td>
-                <td>{{ bar.Commentaires }}</td>
-                <td>
-                    <a href="{{ path('bars_show', {'id': bar.id}) }}">show</a>
-                    <a href="{{ path('bars_edit', {'id': bar.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+    <h1>les bars lillois</h1>
 
-    <a href="{{ path('bars_new') }}">Create new</a>
+    <a href="{{ path('bars_new') }}">Ajouter un bars</a>
+
+    <br>
+
+    <br>
+
+<div class="row">
+
+{% for bar in bars %}
+
+  <div class="card col-md-4 col-xs-6">
+     <img class="card-img-top img-fluid" src="https://source.unsplash.com/featured/" alt="Card image top">
+    <div class="card-body">
+      <h5 class="card-title">{{ bar.Nom }}</h5>
+      <p class="card-text">{{ bar.Alcools }} {{ bar.Adresse }}<br> </p>
+      <p class="card-text"><small class="text-muted"><a href="{{ path('bars_show', {'id': bar.id}) }}">Afficher</a></small>
+     <small class="text-muted"><a href="{{ path('bars_edit', {'id': bar.id}) }}">Modifier</a></small></p>
+    </div>
+  </div>
+
+{% endfor %}
+  </div>
 {% endblock %}

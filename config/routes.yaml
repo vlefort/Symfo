@@ -1,5 +1,5 @@
 index:
     path: /
-    controller: App\Controller\HelloController::index
+    controller: App\Controller\BarsController::index
 logout:
     path: /logout
