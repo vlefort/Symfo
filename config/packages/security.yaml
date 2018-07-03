@@ -18,6 +18,9 @@ security:
                 login_path: login
                 check_path: login
                 post_only:  true
+            logout:
+                path:   /logout
+                target: /
 
             # activate different ways to authenticate
 
@@ -33,4 +36,4 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_USER }
+        #- { path: ^/, roles: ROLE_USER }
