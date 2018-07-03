@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Utilisateurs;
+use App\Entity\Users;
 use App\Form\UtilisateursType;
 use App\Repository\UtilisateursRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -30,7 +30,7 @@ class UtilisateursController extends Controller
      */
     public function new(Request $request): Response
     {
-        $utilisateur = new Utilisateurs();
+        $utilisateur = new Users();
         $form = $this->createForm(UtilisateursType::class, $utilisateur);
         $form->handleRequest($request);
 
@@ -51,7 +51,7 @@ class UtilisateursController extends Controller
     /**
      * @Route("/{id}", name="utilisateurs_show", methods="GET")
      */
-    public function show(Utilisateurs $utilisateur): Response
+    public function show(Users $utilisateur): Response
     {
         return $this->render('utilisateurs/show.html.twig', ['utilisateur' => $utilisateur]);
     }
@@ -59,7 +59,7 @@ class UtilisateursController extends Controller
     /**
      * @Route("/{id}/edit", name="utilisateurs_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Utilisateurs $utilisateur): Response
+    public function edit(Request $request, Users $utilisateur): Response
     {
         $form = $this->createForm(UtilisateursType::class, $utilisateur);
         $form->handleRequest($request);
@@ -79,7 +79,7 @@ class UtilisateursController extends Controller
     /**
      * @Route("/{id}", name="utilisateurs_delete", methods="DELETE")
      */
-    public function delete(Request $request, Utilisateurs $utilisateur): Response
+    public function delete(Request $request, Users $utilisateur): Response
     {
         if ($this->isCsrfTokenValid('delete'.$utilisateur->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
