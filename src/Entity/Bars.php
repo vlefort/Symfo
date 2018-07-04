@@ -68,6 +68,22 @@ class Bars
     }
 
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     */
+    private $user;
+
+
+    public function setUser($user){
+        $this->user = $user;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
     public function getId()
     {
         return $this->id;
