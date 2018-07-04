@@ -58,14 +58,25 @@ class AccountController extends Controller
             $em->persist($user);
             $em->flush();
 
-
-
             return $this->redirectToRoute('bars_index');
         }
         return $this->render('account/register.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/addAdmin", name="adminnn", methods="GET|POST")
+     */
+    public function addadmin(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $usr=$this->getUser();
+        $array=$usr->getRoles();
+        array_push($array,"ROLE_ADMIN");
+        $usr->setRoles($array);
+        $this->getDoctrine()->getManager()->flush();
+        var_dump($usr->getRoles());
     }
 
 }

@@ -4,6 +4,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -40,12 +41,21 @@ class Users implements UserInterface, \Serializable
      */
     private $isActive;
 
+    /**
+     *
+     * @ORM\Column(type="array")
+     *
+     * @var string[]
+     *
+     */
+    private $roles = [];
+
     public function __construct()
     {
+        $this->roles[]="ROLE_USER";
         $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid('', true));
     }
+
 
     public function getId()
     {
@@ -79,9 +89,25 @@ class Users implements UserInterface, \Serializable
         return $this->password;
     }
 
-    public function getRoles()
+    /**
+     * Retourne les rôles de l'user
+     */
+    public function getRoles(): array
     {
-        return array('ROLE_USER');
+        $roles = $this->roles;
+
+        // Afin d'être sûr qu'un user a toujours au moins 1 rôle
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return $roles;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
     }
 
     public function eraseCredentials()
