@@ -18,7 +18,6 @@ class BarsType extends AbstractType
             ->add('Terasse')
             ->add('Adresse')
             ->add('Photos')
-            ->add('Notations')
             ->add('Commentaires')
         ;
     }

@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Hello{% endblock %}
+{% block description %} {% endblock %}
+{% block keywords %} {% endblock %}
+{% block body %}
+
+    {{ dump(form) }}
+    <div class="container">
+        {# templates/commentary/new.html.twig #}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+
+
+
+{% endblock %}
