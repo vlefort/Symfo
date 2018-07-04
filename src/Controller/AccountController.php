@@ -52,7 +52,7 @@ class AccountController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $task = $form->getData();
-            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -69,14 +69,14 @@ class AccountController extends Controller
     /**
      * @Route("/addAdmin", name="adminnn", methods="GET|POST")
      */
-    public function addadmin(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function addadmin(Request $request)
     {
         $usr=$this->getUser();
         $array=$usr->getRoles();
         array_push($array,"ROLE_ADMIN");
         $usr->setRoles($array);
         $this->getDoctrine()->getManager()->flush();
-        var_dump($usr->getRoles());
+        return $this->redirectToRoute('logout');
     }
 
 }

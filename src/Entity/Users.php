@@ -50,6 +50,7 @@ class Users implements UserInterface, \Serializable
      */
     private $roles = [];
 
+
     public function __construct()
     {
         $this->roles[]="ROLE_USER";
@@ -142,8 +143,8 @@ class Users implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            // see section on salt below
-            // $this->salt,
+            $this->roles,
+            $this->isActive,
         ));
     }
 
@@ -154,8 +155,8 @@ class Users implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            // see section on salt below
-            // $this->salt
+            $this->roles,
+            $this->isActive,
         ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 
