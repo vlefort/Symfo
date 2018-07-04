@@ -50,6 +50,18 @@ class Users implements UserInterface, \Serializable
      */
     private $roles = [];
 
+    private $PlainPassword;
+
+    
+    public function getPlainPassword()
+    {
+        return $this->PlainPassword;
+    }
+
+    public function setPlainPassword($PlainPassword): void
+    {
+        $this->PlainPassword = $PlainPassword;
+    }
 
     public function __construct()
     {
