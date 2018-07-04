@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\ExpressionLanguage\Expression;
 
 /**
  * @Route("/bars")
@@ -34,9 +35,10 @@ class BarsController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            
+            $bar->setUser($this->getUser());
             $em->persist($bar);
             $em->flush();
-
             return $this->redirectToRoute('bars_index');
         }
 
@@ -56,9 +58,13 @@ class BarsController extends Controller
 
     /**
      * @Route("/{id}/edit", name="bars_edit", methods="GET|POST")
+
      */
     public function edit(Request $request, Bars $bar): Response
     {
+        $this->denyAccessUnlessGranted(new Expression(
+        'object.getUser() == user'), $bar);
+
         $form = $this->createForm(BarsType::class, $bar);
         $form->handleRequest($request);
 
@@ -67,8 +73,7 @@ class BarsController extends Controller
 
             return $this->redirectToRoute('bars_edit', ['id' => $bar->getId()]);
         }
-
-        return $this->render('bars/edit.html.twig', [
+         return $this->render('bars/edit.html.twig', [
             'bar' => $bar,
             'form' => $form->createView(),
         ]);
