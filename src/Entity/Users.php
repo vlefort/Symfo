@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @ORM\Table(name="app_users")
@@ -40,8 +41,6 @@ class Users implements UserInterface, \Serializable
     private $isActive;
 
 
-
-
     public function __construct()
     {
         $this->isActive = true;
@@ -49,10 +48,21 @@ class Users implements UserInterface, \Serializable
         // $this->salt = md5(uniqid('', true));
     }
 
-    public function getId(): ?int{
+    public function getId()
+    {
         return $this->id;
     }
-    
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getisActive()
+    {
+        return $this->isActive;
+    }
+
     public function getUsername()
     {
         return $this->username;
@@ -123,4 +133,37 @@ class Users implements UserInterface, \Serializable
             // $this->salt
         ) = unserialize($serialized, ['allowed_classes' => false]);
     }
+
+    public function setId($id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    public function setUsername($username): self
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    public function setPassword($password): self
+    {
+
+        $this->password = $password;
+        return $this;
+    }
+
+
+    public function setEmail($email): self
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    public function setIsActive($isActive): self
+    {
+        $this->isActive = $isActive;
+        return $this;
+    }
+
 }
