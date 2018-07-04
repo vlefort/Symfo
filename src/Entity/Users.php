@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @ORM\Table(name="app_users")
@@ -131,4 +132,37 @@ class Users implements UserInterface, \Serializable
             // $this->salt
         ) = unserialize($serialized, ['allowed_classes' => false]);
     }
+
+    public function setId($id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    public function setUsername($username): self
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    public function setPassword($password): self
+    {
+
+        $this->password = $password;
+        return $this;
+    }
+
+
+    public function setEmail($email): self
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    public function setIsActive($isActive): self
+    {
+        $this->isActive = $isActive;
+        return $this;
+    }
+
 }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\AccountLoginType;
 use App\Entity\Users;
 use App\Form\UsersType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,18 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class AccountController extends Controller
 {
+    /**
+     * @Route("/", name="account", methods="GET|POST")
+     */
+    public function index()
+    {
+        $user= $this->get('security.token_storage')->getToken()->getUser();
+
+        return $this->render('account/index.html.twig',array(
+            'user',$user
+        ));
+    }
+
     /**
      * @Route("/login", name="login", methods="GET|POST")
      */
@@ -33,17 +46,25 @@ class AccountController extends Controller
     /**
      * @Route("/register", name="register", methods="GET|POST")
      */
-    public function register(Request $request)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-        $form = $this->createForm(UsersType::class);
+        $user = new Users();
+        $form = $this->createForm(UsersType::class,$user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $task = $form->getData();
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
 
-            return $this->redirectToRoute('task_success');
+
+
+            return $this->redirectToRoute('bars_index');
         }
-        return $this->render('bars/edit.html.twig', [
-            'bar' => $bar,
+        return $this->render('account/register.html.twig', [
+            'user' => $user,
             'form' => $form->createView(),
         ]);
     }
