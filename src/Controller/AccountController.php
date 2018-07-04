@@ -23,10 +23,9 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $user= $this->get('security.token_storage')->getToken()->getUser();
-
+        $usr= $this->getUser();
         return $this->render('account/index.html.twig',array(
-            'user',$user
+            'usr'=>$usr
         ));
     }
 
