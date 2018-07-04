@@ -46,6 +46,21 @@ class Users implements UserInterface, \Serializable
         // $this->salt = md5(uniqid('', true));
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getisActive()
+    {
+        return $this->isActive;
+    }
+
     public function getUsername()
     {
         return $this->username;

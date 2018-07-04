@@ -15,8 +15,8 @@ security:
         main:
             anonymous: ~
             form_login:
-                login_path: login
-                check_path: login
+                login_path: /account/login
+                check_path: /account/login
                 post_only:  true
             logout:
                 path:   /logout
@@ -35,5 +35,5 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/account, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/bars/new, roles: ROLE_USER }
