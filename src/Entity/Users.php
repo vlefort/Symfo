@@ -39,6 +39,9 @@ class Users implements UserInterface, \Serializable
      */
     private $isActive;
 
+
+
+
     public function __construct()
     {
         $this->isActive = true;
@@ -46,6 +49,10 @@ class Users implements UserInterface, \Serializable
         // $this->salt = md5(uniqid('', true));
     }
 
+    public function getId(): ?int{
+        return $this->id;
+    }
+    
     public function getUsername()
     {
         return $this->username;

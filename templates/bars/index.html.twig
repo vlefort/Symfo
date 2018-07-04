@@ -23,7 +23,14 @@
       <h5 class="card-title">{{ bar.Nom }}</h5>
       <p class="card-text">{{ bar.Alcools }} {{ bar.Adresse }}<br> </p>
       <p class="card-text"><small class="text-muted"><a href="{{ path('bars_show', {'id': bar.id}) }}">Afficher</a></small>
-     <small class="text-muted"><a href="{{ path('bars_edit', {'id': bar.id}) }}">Modifier</a></small></p>
+
+    {%if bar.user == app.user%}
+
+     <small class="text-muted"><a href="{{ path('bars_edit', {'id': bar.id}) }}">Modifier</a></small>
+
+    {% endif %}
+
+     </p>
     </div>
   </div>
 
