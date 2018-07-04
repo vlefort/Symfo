@@ -3,29 +3,49 @@
 namespace App\Controller;
 
 use App\Entity\Commentary;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CommentaryController extends Controller
 {
     /**
-     * @Route("/test")
+     * @Route("/newCommentary")
      */
-    public function createFakeCommentary()
+    public function formulaireCommentaire(Request $request)
     {
-        $comment = new Commentary();
-        $comment->setMessage(file_get_contents('http://loripsum.net/api'));
-        $comment->setAuteur(2);
-        $comment->setPublishDate(new \DateTime());
+        $commentaire = new Commentary();
+        $commentaire->setPublishDate(new \Datetime());
+        $commentaire->setAuteur($this->getUser()->getId());
 
-        $repository = $this->getDoctrine()->getManager();
-        $repository->persist($comment);
-        $repository->flush();
+        $form = $this->createFormBuilder($commentaire)
+            ->add('Message', TextareaType::class, array(
+                'label' => 'Message',
+                'attr' => array(
+                    'placeholder' => 'Donnez votre avis')))
+            ->add('Publier', SubmitType::class, array('label' => 'Envoyer le commentaire'))
+            ->getForm();
 
-        return $this->render('test/index.html.twig', [
-            'comments' => $comment
-        ]);
+        $form->handleRequest($request);
+        // Si le form est valide j'envoie les données en base.
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $repositoryCommentary = $this->getDoctrine()->getManager();
+            // Je sauvegarde toutes les données
+            $repositoryCommentary->persist($commentaire);
+            // J'envoie les données en base (INSERT INTO...)
+            $repositoryCommentary->flush();
+        }
+
+        return $this->render('commentary/new.html.twig', array(
+            'form' => $form->createView()
+            )
+        );
     }
+
 
     /**
      * @Route("/liste")
@@ -37,7 +57,7 @@ class CommentaryController extends Controller
         $comments = $repository->findAll();
 
 
-        return $this->render('test/index.html.twig', [
+        return $this->render('commentary/index.html.twig', [
             'comments' => $comments
         ]);
     }
