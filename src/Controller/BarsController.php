@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Bars;
+use App\Entity\Evaluations;
 use App\Form\BarsType;
 use App\Repository\BarsRepository;
+use App\Repository\EvaluationsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,7 +53,10 @@ class BarsController extends Controller
      */
     public function show(Bars $bar): Response
     {
-        return $this->render('bars/show.html.twig', ['bar' => $bar]);
+        $repo = $this->getDoctrine()->getRepository(Evaluations::class);
+        $eval_avg =$repo->findAllAverageEvaluation($bar);
+
+        return $this->render('bars/show.html.twig', ['bar' => $bar, "avgEvaluations" => $eval_avg]);
     }
 
     /**

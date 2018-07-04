@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,14 +48,25 @@ class Bars
     private $Photos;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $Notations;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $Commentaires;
+
+    /**
+     * One Bar has Many Evaluations.
+     * @ORM\OneToMany(targetEntity="App\Entity\Evaluations", mappedBy="Bar")
+     */
+
+    private $Evaluations;
+
+    /**
+     * Bars constructor.
+     */
+    public function __construct()
+    {
+        $this->Evaluations = new ArrayCollection();
+    }
+
 
     public function getId()
     {
@@ -133,18 +145,6 @@ class Bars
         return $this;
     }
 
-    public function getNotations(): ?int
-    {
-        return $this->Notations;
-    }
-
-    public function setNotations(?int $Notations): self
-    {
-        $this->Notations = $Notations;
-
-        return $this;
-    }
-
     public function getCommentaires(): ?string
     {
         return $this->Commentaires;
@@ -153,6 +153,18 @@ class Bars
     public function setCommentaires(?string $Commentaires): self
     {
         $this->Commentaires = $Commentaires;
+
+        return $this;
+    }
+
+    public function getEvaluations()
+    {
+        return $this->Evaluations;
+    }
+
+    public function setEvaluations(?Evaluations $Evaluations): self
+    {
+        $this->Evaluations = $Evaluations;
 
         return $this;
     }
