@@ -19,6 +19,19 @@ class BarsRepository extends ServiceEntityRepository
         parent::__construct($registry, Bars::class);
     }
 
+    public function findBarsWithKeyWord($key_word)
+    {
+
+        $req = $this->createQueryBuilder('b')
+            ->andWhere('b.nom LIKE :key_word')
+            ->andWhere('b.Alcools LIKE :key_word')
+            ->andWhere('b.Adresse LIKE :key_word')
+            ->setParameter('key_word', '%'.$key_word.'%')
+            ->getQuery();
+
+            return $req->getResult();
+    }
+
 //    /**
 //     * @return Bars[] Returns an array of Bars objects
 //     */

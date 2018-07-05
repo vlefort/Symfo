@@ -1,8 +1,13 @@
 {% extends 'base.html.twig' %}
-{% block title %}Bars index{% endblock %}
-{% set count = 0 %}
-
 {% block body %}
+ <form action="{{ path('recherche') }}" method="post">
+      
+
+        <label for="password">Mot clé</label>
+        <input type="test" id="mot_cle" name="mot_cle"/>
+
+        <button type="submit">Rechercher</button>
+    </form>
 
     <h1>les bars lillois</h1>
 

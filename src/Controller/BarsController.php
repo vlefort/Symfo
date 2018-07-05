@@ -23,6 +23,7 @@ class BarsController extends Controller
      */
     public function index(BarsRepository $barsRepository): Response
     {
+
         return $this->render('bars/index.html.twig', ['bars' => $barsRepository->findAll()]);
     }
 
@@ -106,4 +107,17 @@ class BarsController extends Controller
 
         return $this->redirectToRoute('bars_index');
     }
+
+/**
+     * @Route("/recherche", name="recherche")
+     */
+    public function recherche(Request $request,BarsRepository $barsRepository): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $bars_recherche = $em->getRepository(Bars::class)->findBarsWithKeyWord($request->get('mot_cle'));
+
+        return $this->render('bars/index.html.twig', 
+            ['bars' => $bars_recherche]);
+    }
+
 }
