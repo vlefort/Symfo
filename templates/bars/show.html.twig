@@ -36,23 +36,16 @@
                 <td>{{ bar.Photos }}</td>
             </tr>
             <tr>
-                <th>Notations</th>
-                <td>{{ bar.Notations }}</td>
-            </tr>
-                <th>Commentaires</th>
-                <td>{{ bar.Commentaires }}</td>
-            </tr>
-            <tr>
                 <th>Evaluation</th>
                 <td>{{ avgEvaluations }}</td>
             </tr>
 
         </tbody>
     </table>
-    <H2>Espace commentaire</H2>
+    <H2>Espace commentaire : </H2>
         <ul class="list-unstyled mt-3">
             {% for comment in bar.Commentaires %}
-                <li class="media shadow p-3 mb-3 bg-white rounded">
+                <li class="comment-item media shadow p-3 mb-3 bg-white rounded">
                     <div class="media-body">
                         <h5 class="mt-0 mb-1 text-primary">
                             Auteur : {{ comment.auteur.username }}

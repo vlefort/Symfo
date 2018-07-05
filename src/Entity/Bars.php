@@ -48,14 +48,13 @@ class Bars
     private $Photos;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity="Commentary", mappedBy="bar")
      */
     private $Commentaires;
 
     /**
      * One Bar has Many Evaluations.
      * @ORM\OneToMany(targetEntity="App\Entity\Evaluations", mappedBy="Bar")
-     * @ORM\OneToMany(targetEntity="Commentary", mappedBy="bar")
      */
 
     private $Evaluations;
@@ -162,7 +161,7 @@ class Bars
         return $this;
     }
 
-    public function getCommentaires(): ?string
+    public function getCommentaires()
     {
         return $this->Commentaires;
     }
@@ -175,7 +174,6 @@ class Bars
     }
 
     public function getEvaluations()
-    public function getCommentaires()
     {
         return $this->Evaluations;
     }

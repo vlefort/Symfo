@@ -20,6 +20,15 @@ $enable-rounded: true;
   }
 }
 
+.comment-item {
+  transition: 0.3s linear;
+
+  &:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.45) !important;
+  }
+}
+
 .main-logo-animate {
   -webkit-transform-origin: 50% 50%;
   -moz-transform-origin: 50% 50%;

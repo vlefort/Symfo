@@ -70,7 +70,7 @@ class BarsController extends Controller
         $repo = $this->getDoctrine()->getRepository(Evaluations::class);
         $eval_avg =$repo->findAllAverageEvaluation($bar);
 
-        return $this->render('bars/show.html.twig', ['bar' => $bar, "avgEvaluations" => $eval_avg]);
+
         $commentaire = new Commentary();
         $commentaire->setPublishDate(new \Datetime());
         $commentaire->setAuteur($this->getUser());
@@ -88,9 +88,7 @@ class BarsController extends Controller
             // J'envoie les données en base (INSERT INTO...)
             $repositoryCommentary->flush();
         }
-
-
-        return $this->render('bars/show.html.twig', ['bar' => $bar, 'form'=> $form->createView()]);
+        return $this->render('bars/show.html.twig', ['bar' => $bar,"avgEvaluations" => $eval_avg, 'form'=> $form->createView()]);
     }
 
     /**
