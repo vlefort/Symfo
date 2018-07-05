@@ -17,7 +17,8 @@ class Commentary
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="id_auteur", referencedColumnName="id", nullable=false)
      */
     private $auteur;
 
@@ -31,17 +32,23 @@ class Commentary
      */
     private $message;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Bars", inversedBy="Commentaires")
+     * @ORM\JoinColumn(name="id_bar", referencedColumnName="id", nullable=false)
+     */
+    private $bar;
+
     public function getId()
     {
         return $this->id;
     }
 
-    public function getAuteur(): ?int
+    public function getAuteur()
     {
         return $this->auteur;
     }
 
-    public function setAuteur(int $auteur): self
+    public function setAuteur($auteur): self
     {
         $this->auteur = $auteur;
 
@@ -68,6 +75,13 @@ class Commentary
     public function setMessage(string $message): self
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function setBar($bar): self
+    {
+        $this->bar = $bar;
 
         return $this;
     }

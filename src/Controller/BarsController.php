@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Bars;
+use App\Entity\Commentary;
 use App\Form\BarsType;
+use App\Form\CommentType;
 use App\Repository\BarsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,11 +51,30 @@ class BarsController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="bars_show", methods="GET")
+     * @Route("/{id}", name="bars_show", methods="GET|POST")
      */
-    public function show(Bars $bar): Response
+    public function show(Request $request, Bars $bar): Response
     {
-        return $this->render('bars/show.html.twig', ['bar' => $bar]);
+        $commentaire = new Commentary();
+        $commentaire->setPublishDate(new \Datetime());
+        $commentaire->setAuteur($this->getUser());
+
+        $form = $this->createForm(CommentType::class, $commentaire);
+        $form->handleRequest($request);
+        // Si le form est valide j'envoie les données en base.
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $commentaire->setBar($bar);
+
+            $repositoryCommentary = $this->getDoctrine()->getManager();
+            // Je sauvegarde toutes les données
+            $repositoryCommentary->persist($commentaire);
+            // J'envoie les données en base (INSERT INTO...)
+            $repositoryCommentary->flush();
+        }
+
+
+        return $this->render('bars/show.html.twig', ['bar' => $bar, 'form'=> $form->createView()]);
     }
 
     /**

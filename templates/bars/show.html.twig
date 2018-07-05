@@ -39,12 +39,29 @@
                 <th>Notations</th>
                 <td>{{ bar.Notations }}</td>
             </tr>
-            <tr>
-                <th>Commentaires</th>
-                <td>{{ bar.Commentaires }}</td>
-            </tr>
         </tbody>
     </table>
+    <H2>Espace commentaire</H2>
+        <ul class="list-unstyled mt-3">
+            {% for comment in bar.Commentaires %}
+                <li class="media shadow p-3 mb-3 bg-white rounded">
+                    <div class="media-body">
+                        <h5 class="mt-0 mb-1 text-primary">
+                            Auteur : {{ comment.auteur.username }}
+                        </h5>
+                        <p>  {{ comment.message }} </p>
+                        <span class="text-muted">Date de publication : le {{ comment.PublishDate|date("d/m/Y H\\hi") }}</span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+
+    <h1>Ajouter un commentaire</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
 
     <a href="{{ path('bars_index') }}">back to list</a>
 

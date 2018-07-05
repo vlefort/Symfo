@@ -52,7 +52,7 @@ class Bars
     private $Notations;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity="Commentary", mappedBy="bar")
      */
     private $Commentaires;
 
@@ -161,7 +161,7 @@ class Bars
         return $this;
     }
 
-    public function getCommentaires(): ?string
+    public function getCommentaires()
     {
         return $this->Commentaires;
     }

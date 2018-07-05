@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Commentary;
+use App\Form\CommentType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,16 +20,9 @@ class CommentaryController extends Controller
     {
         $commentaire = new Commentary();
         $commentaire->setPublishDate(new \Datetime());
-        $commentaire->setAuteur($this->getUser()->getId());
+        $commentaire->setAuteur($this->getUser());
 
-        $form = $this->createFormBuilder($commentaire)
-            ->add('Message', TextareaType::class, array(
-                'label' => 'Message',
-                'attr' => array(
-                    'placeholder' => 'Donnez votre avis')))
-            ->add('Publier', SubmitType::class, array('label' => 'Envoyer le commentaire'))
-            ->getForm();
-
+        $form = $this->createForm(CommentType::class, $commentaire);
         $form->handleRequest($request);
         // Si le form est valide j'envoie les données en base.
         if($form->isSubmitted() && $form->isValid())
