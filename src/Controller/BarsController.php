@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Bars;
+use App\Entity\Evaluations;
 use App\Entity\Commentary;
 use App\Form\BarsType;
 use App\Form\CommentType;
 use App\Repository\BarsRepository;
+use App\Repository\EvaluationsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,30 +25,40 @@ class BarsController extends Controller
      */
     public function index(BarsRepository $barsRepository): Response
     {
+
         return $this->render('bars/index.html.twig', ['bars' => $barsRepository->findAll()]);
     }
 
     /**
      * @Route("/new", name="bars_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, BarsRepository $barsRepository): Response
     {
         $bar = new Bars();
         $form = $this->createForm(BarsType::class, $bar);
         $form->handleRequest($request);
-
+        $bars_already = false;
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
-            $bar->setUser($this->getUser());
-            $em->persist($bar);
-            $em->flush();
-            return $this->redirectToRoute('bars_index');
+
+            $barsNom = $em->getRepository(Bars::class)->findByNom($bar->getNom());
+
+
+            if(count($barsNom) > 0){
+                $bars_already = true;
+            }else{
+               $bar->setUser($this->getUser());
+                $em->persist($bar);
+               $em->flush();
+               return $this->redirectToRoute('bars_index');
+            }
         }
 
         return $this->render('bars/new.html.twig', [
             'bar' => $bar,
             'form' => $form->createView(),
+            'bars_already' => $bars_already,
         ]);
     }
 
@@ -55,6 +67,10 @@ class BarsController extends Controller
      */
     public function show(Request $request, Bars $bar): Response
     {
+        $repo = $this->getDoctrine()->getRepository(Evaluations::class);
+        $eval_avg =$repo->findAllAverageEvaluation($bar);
+
+        return $this->render('bars/show.html.twig', ['bar' => $bar, "avgEvaluations" => $eval_avg]);
         $commentaire = new Commentary();
         $commentaire->setPublishDate(new \Datetime());
         $commentaire->setAuteur($this->getUser());
@@ -113,4 +129,17 @@ class BarsController extends Controller
 
         return $this->redirectToRoute('bars_index');
     }
+
+/**
+     * @Route("/recherche", name="recherche")
+     */
+    public function recherche(Request $request,BarsRepository $barsRepository): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $bars_recherche = $em->getRepository(Bars::class)->findBarsWithKeyWord($request->get('mot_cle'));
+
+        return $this->render('bars/index.html.twig', 
+            ['bars' => $bars_recherche]);
+    }
+
 }
