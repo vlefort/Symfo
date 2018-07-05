@@ -52,7 +52,7 @@ class Users implements UserInterface, \Serializable
 
     private $PlainPassword;
 
-    
+
     public function getPlainPassword()
     {
         return $this->PlainPassword;
@@ -108,7 +108,6 @@ class Users implements UserInterface, \Serializable
     public function getRoles(): array
     {
         $roles = $this->roles;
-
         // Afin d'être sûr qu'un user a toujours au moins 1 rôle
         if (empty($roles)) {
             $roles[] = 'ROLE_USER';
