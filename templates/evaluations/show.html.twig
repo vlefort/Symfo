@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evaluations{% endblock %}
+
+{% block body %}
+    <h1>Evaluations</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Bars</th>
+                <td>{{ evaluation.Bar.Nom }}</td>
+            </tr>
+            <tr>
+                <th>Value</th>
+                <td>{{ evaluation.Value }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('evaluations_index') }}">back to list</a>
+
+    <a href="{{ path('evaluations_edit', {'id': evaluation.id}) }}">edit</a>
+
+    {{ include('evaluations/_delete_form.html.twig') }}
+{% endblock %}

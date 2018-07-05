@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evaluations{% endblock %}
+
+{% block body %}
+<h1>Notes</h1>
+
+<table class="table">
+    <thead>
+    </thead>
+    <tbody>
+    <tr>
+
+    {% for eval in bar.evaluations %}
+        <strong> {{ eval.value }} </strong>
+        <br>
+    {% endfor %}
+
+    </tr>
+    </tbody>
+</table>
+
+    <a href="{{ path('bars_index') }}">retour</a>
+{% endblock %}

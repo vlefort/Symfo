@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Evaluations;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use PhpParser\Node\Scalar\String_;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,16 +18,6 @@ class EvaluationsRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Evaluations::class);
-    }
-
-    public function findAllValue($Bar) : array
-    {
-        $req = $this->createQueryBuilder('i')
-            ->andWhere('i.Bar = :Bar')
-            ->setParameter('Bar', $Bar)
-            ->getQuery();
-
-        return $req->getResult();
     }
 
     public function findAllAverageEvaluation($Bar)

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evaluations{% endblock %}
+
+{% block body %}
+    <h1>Evaluations</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Bars</th>
+                <th>Notes</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for evaluation in evaluations %}
+            <tr>
+                <td>{{ evaluation.Bar.Nom }}</td>
+                <td>{{ evaluation.Value }}</td>
+                <td>
+                    <a href="{{ path('evaluations_edit', {'id': evaluation.id}) }}">modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('evaluations_new') }}">Create new</a>
+{% endblock %}

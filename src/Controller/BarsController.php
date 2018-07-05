@@ -92,8 +92,15 @@ class BarsController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="bars_edit", methods="GET|POST")
+     * @Route("/show_evaluations/{id}", name="bars_show_evaluations", methods="GET")
+     */
+    public function show_evaluations(Bars $bar): Response
+    {
+        return $this->render('bars/show_evaluations.html.twig', ['bar' => $bar]);
+    }
 
+    /**
+     * @Route("/{id}/edit", name="bars_edit", methods="GET|POST")
      */
     public function edit(Request $request, Bars $bar): Response
     {
