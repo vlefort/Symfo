@@ -20,7 +20,7 @@ class Bars
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $Nom;
+    private $nom;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -91,12 +91,12 @@ class Bars
 
     public function getNom(): ?string
     {
-        return $this->Nom;
+        return $this->nom;
     }
 
-    public function setNom(string $Nom): self
+    public function setNom(string $nom): self
     {
-        $this->Nom = $Nom;
+        $this->nom = $nom;
 
         return $this;
     }

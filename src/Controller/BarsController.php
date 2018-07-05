@@ -29,24 +29,33 @@ class BarsController extends Controller
     /**
      * @Route("/new", name="bars_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, BarsRepository $barsRepository): Response
     {
         $bar = new Bars();
         $form = $this->createForm(BarsType::class, $bar);
         $form->handleRequest($request);
-
+        $bars_already = false;
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
-            $bar->setUser($this->getUser());
-            $em->persist($bar);
-            $em->flush();
-            return $this->redirectToRoute('bars_index');
+
+            $barsNom = $em->getRepository(Bars::class)->findByNom($bar->getNom());
+
+
+            if(count($barsNom) > 0){
+                $bars_already = true;
+            }else{
+               $bar->setUser($this->getUser());
+                $em->persist($bar);
+               $em->flush();
+               return $this->redirectToRoute('bars_index');
+            }
         }
 
         return $this->render('bars/new.html.twig', [
             'bar' => $bar,
             'form' => $form->createView(),
+            'bars_already' => $bars_already,
         ]);
     }
 

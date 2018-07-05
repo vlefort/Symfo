@@ -5,6 +5,10 @@
 {% block body %}
     <h1>Create new Bars</h1>
 
+    {% if bars_already %}
+    <p>Le bars que vous voulez ajouter est déjà présent sur le site </p>
+    {% endif %}
+    
     {{ include('bars/_form.html.twig') }}
 
     <a href="{{ path('bars_index') }}">back to list</a>
