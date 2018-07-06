@@ -53,6 +53,13 @@ class Users implements UserInterface, \Serializable
     private $isActive;
 
     /**
+     * One Users has Many Evaluations.
+     * @ORM\OneToMany(targetEntity="App\Entity\Evaluations", mappedBy="User")
+     */
+
+    private $Evaluations;
+
+    /**
      *
      * @ORM\Column(type="array")
      *

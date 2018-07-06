@@ -69,16 +69,27 @@
             {% endfor %}
         </ul>
 
-
-    <h1>Ajouter un commentaire</h1>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
 
+    <H2> Espace évalution : </H2>
+    {{ form_start(formeval) }}
+    {{ form_widget(formeval) }}
+    <form method="post" action="{{ path('bars_show', {'id': bar.id}) }}";">
+        <button class="btn">{{ button_label|default('Envoyer l\'évaluation') }}</button>
+    </form>
+    {{ form_end(formeval) }}
+
+    <br>
+
+    <br>
+    <br>
 
     <a href="{{ path('bars_index') }}">retour</a>
 
     <a href="{{ path('bars_edit', {'id': bar.id}) }}">modifier</a>
 
     {{ include('bars/_delete_form.html.twig') }}
+
 {% endblock %}

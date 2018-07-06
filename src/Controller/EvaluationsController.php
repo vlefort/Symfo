@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Evaluations;
-use App\Form\Evaluations1Type;
+use App\Form\EvaluationsType;
 use App\Repository\EvaluationsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,10 +29,10 @@ class EvaluationsController extends Controller
     public function new(Request $request): Response
     {
         $evaluation = new Evaluations();
-        $form = $this->createForm(Evaluations1Type::class, $evaluation);
-        $form->handleRequest($request);
+        $formeval = $this->createForm(EvaluationsType::class, $evaluation);
+        $formeval->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($formeval->isSubmitted() && $formeval->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($evaluation);
             $em->flush();
@@ -42,7 +42,7 @@ class EvaluationsController extends Controller
 
         return $this->render('evaluations/new.html.twig', [
             'evaluation' => $evaluation,
-            'form' => $form->createView(),
+            'form' => $formeval->createView(),
         ]);
     }
 
@@ -59,7 +59,7 @@ class EvaluationsController extends Controller
      */
     public function edit(Request $request, Evaluations $evaluation): Response
     {
-        $form = $this->createForm(Evaluations1Type::class, $evaluation);
+        $form = $this->createForm(EvaluationsType::class, $evaluation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
