@@ -55,8 +55,8 @@ class BarsController extends Controller
             }else{
                 $bar->setUser($this->getUser());
                 $em->persist($bar);
-                $em->flush();
-                    return $this->redirectToRoute('bars_index');
+               $em->flush();
+               return $this->redirectToRoute('bars_index');
             }
 
             /*   try
