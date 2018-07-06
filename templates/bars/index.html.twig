@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
- <form action="{{ path('recherche') }}" method="post">
-      
-
+    <form action="{{ path('recherche') }}" method="post">
         <label for="password">Mot clé</label>
         <input type="test" id="mot_cle" name="mot_cle"/>
 
@@ -17,32 +15,35 @@
 
     <br>
 
-<div class="row">
+    <div class="row">
 
-{% for bar in bars %}
+    {% for bar in bars %}
 
-  <div class="card col-md-4 col-xs-6">
-  
-  {# https://source.unsplash.com/featured/ #}
+        <div class="card col-md-4 col-xs-6">
 
-<div class="max-height-photos">
-     <img class="card-img-top img-fluid" src="{{ asset('photos_bars/' ~ bar.Photos) }}" alt="Card image top">
-</div>
+            {# https://source.unsplash.com/featured/ #}
 
-    <div class="card-body">
-      <h5 class="card-title">{{ bar.Nom }}</h5>
-      <span class="card-text">{{ bar.Alcools }} {{ bar.Adresse }}<br> </span>
-      <p class="card-text"><small class="text-muted"><a class="btn-show" href="{{ path('bars_show', {'id': bar.id}) }}">Afficher</a></small>
+            <div class="max-height-photos">
+                <img class="card-img-top img-fluid" src="{{ asset('photos_bars/' ~ bar.Photos) }}" alt="Card image top">
+            </div>
 
-    {%if bar.user == app.user%}
+            <div class="card-body">
+                <h5 class="card-title">{{ bar.Nom }}</h5>
+                <span class="card-text">{{ bar.Alcools }} {{ bar.Adresse }}<br> </span>
+                <p class="card-text">
+                    <small class="text-muted"><a class="btn-show" href="{{ path('bars_show', {'id': bar.id}) }}">Afficher</a>
+                    </small>
 
-     <small class="text-muted"><a class="btn-edit" href="{{ path('bars_edit', {'id': bar.id}) }}">Modifier</a></small>
+                    {% if bar.user == app.user %}
 
-    {% endif %}
+                        <small class="text-muted"><a class="btn-edit" href="{{ path('bars_edit', {'id': bar.id}) }}">Modifier</a>
+                        </small>
 
-     </p>
-    </div>
-  </div>
+                    {% endif %}
 
-{% endfor %}
+                </p>
+            </div>
+        </div>
+
+    {% endfor %}
 {% endblock %}

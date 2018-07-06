@@ -25,11 +25,23 @@ use App\Services\UploadImg;
 class BarsController extends Controller
 {
     /**
-     * @Route("/", name="bars_index", methods="GET")
+     * @Route("/", name="bars_index", methods="GET|POST")
      */
     public function index(BarsRepository $barsRepository): Response
     {
         return $this->render('bars/index.html.twig', ['bars' => $barsRepository->findAll()]);
+    }
+
+    /**
+     * @Route("/rechercher", name="recherche")
+     */
+    public function recherche(Request $request, BarsRepository $barsRepository): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $bars_recherche = $em->getRepository(Bars::class)->findBarsWithKeyWord($request->get('mot_cle'));
+
+        return $this->render('bars/index.html.twig',
+            ['bars' => $bars_recherche]);
     }
 
     /**
@@ -41,7 +53,7 @@ class BarsController extends Controller
         $form = $this->createForm(BarsType::class, $bar);
         $form->handleRequest($request);
         $bars_already = false;
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $uploadImg->uploadPhoto($bar);
@@ -50,13 +62,13 @@ class BarsController extends Controller
 
             $barsNom = $em->getRepository(Bars::class)->findByNom($bar->getNom());
 
-            if(count($barsNom) > 0){
+            if (count($barsNom) > 0) {
                 $bars_already = true;
-            }else{
+            } else {
                 $bar->setUser($this->getUser());
                 $em->persist($bar);
-               $em->flush();
-               return $this->redirectToRoute('bars_index');
+                $em->flush();
+                return $this->redirectToRoute('bars_index');
             }
 
             /*   try
@@ -80,7 +92,7 @@ class BarsController extends Controller
 
 
     /**
-     * @Route("/{id}", name="bars_show", methods="GET")
+     * @Route("/{id}", name="bars_show", methods="GET|POST")
      */
     public function show(Request $request, Bars $bar): Response
     {
@@ -128,10 +140,8 @@ class BarsController extends Controller
                 $repositoryEvaluation->flush();
             }
         }
-            return $this->render('bars/show.html.twig', ['bar' => $bar, "avgEvaluations" => $eval_avg, 'form' => $form->createView(), 'formeval' => $formeval->createView()]);
+        return $this->render('bars/show.html.twig', ['bar' => $bar, "avgEvaluations" => $eval_avg, 'form' => $form->createView(), 'formeval' => $formeval->createView()]);
     }
-
-
 
 
     /**
@@ -145,12 +155,12 @@ class BarsController extends Controller
     /**
      * @Route("/{id}/edit", name="bars_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Bars $bar,UploadImg $uploadImg ): Response
+    public function edit(Request $request, Bars $bar, UploadImg $uploadImg): Response
     {
         $uploadImg->newFile($bar);
 
         $this->denyAccessUnlessGranted(new Expression(
-        'object.getUser() == user'), $bar);
+            'object.getUser() == user'), $bar);
 
         $form = $this->createForm(BarsType::class, $bar);
         $form->handleRequest($request);
@@ -158,10 +168,10 @@ class BarsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadImg->uploadPhoto($bar);
             $this->getDoctrine()->getManager()->flush();
- 
+
             return $this->redirectToRoute('bars_edit', ['id' => $bar->getId()]);
         }
-         return $this->render('bars/edit.html.twig', [
+        return $this->render('bars/edit.html.twig', [
             'bar' => $bar,
             'form' => $form->createView(),
         ]);
@@ -172,7 +182,7 @@ class BarsController extends Controller
      */
     public function delete(Request $request, Bars $bar): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$bar->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $bar->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($bar);
             $em->flush();
@@ -181,17 +191,6 @@ class BarsController extends Controller
         return $this->redirectToRoute('bars_index');
     }
 
-/**
-     * @Route("/recherche", name="recherche")
-     */
-    public function recherche(Request $request,BarsRepository $barsRepository): Response
-    {
-        $em = $this->getDoctrine()->getManager();
-        $bars_recherche = $em->getRepository(Bars::class)->findBarsWithKeyWord($request->get('mot_cle'));
-
-        return $this->render('bars/index.html.twig', 
-            ['bars' => $bars_recherche]);
-    }
 
 
 

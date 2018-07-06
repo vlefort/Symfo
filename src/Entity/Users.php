@@ -221,4 +221,17 @@ class Users implements UserInterface, \Serializable
         return $this;
     }
 
+
+    public function getEvaluations(): self
+    {
+        return $this->Evaluations;
+    }
+
+    public function setEvaluations($Evaluations): self
+    {
+        $this->Evaluations = $Evaluations;
+        return $this;
+    }
+
+
 }
