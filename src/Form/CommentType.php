@@ -19,6 +19,7 @@ class CommentType extends AbstractType
                 'label' => 'Message',
                 'attr' => array(
                     'placeholder' => 'Donnez votre avis')))
+            ->add('Publier', SubmitType::class, array('label' => 'Envoyer le commentaire'))
         ;
     }
 

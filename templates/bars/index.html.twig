@@ -31,12 +31,12 @@
 
     <div class="card-body">
       <h5 class="card-title">{{ bar.Nom }}</h5>
-      <p class="card-text">{{ bar.Alcools }} {{ bar.Adresse }}<br> </p>
-      <p class="card-text"><small class="text-muted"><a href="{{ path('bars_show', {'id': bar.id}) }}">Afficher</a></small>
+      <span class="card-text">{{ bar.Alcools }} {{ bar.Adresse }}<br> </span>
+      <p class="card-text"><small class="text-muted"><a class="btn-show" href="{{ path('bars_show', {'id': bar.id}) }}">Afficher</a></small>
 
     {%if bar.user == app.user%}
 
-     <small class="text-muted"><a href="{{ path('bars_edit', {'id': bar.id}) }}">Modifier</a></small>
+     <small class="text-muted"><a class="btn-edit" href="{{ path('bars_edit', {'id': bar.id}) }}">Modifier</a></small>
 
     {% endif %}
 

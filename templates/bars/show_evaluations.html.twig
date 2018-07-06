@@ -3,22 +3,19 @@
 {% block title %}Evaluations{% endblock %}
 
 {% block body %}
-<h1>Notes</h1>
+<h1>Les evaluations</h1>
 
-<table class="table">
-    <thead>
-    </thead>
-    <tbody>
-    <tr>
+    <ul class="list-unstyled mt-3">
+        {% for eval in bar.evaluations %}
+            <li class="comment-item media shadow p-3 mb-3 bg-white rounded">
+                <div class="media-body">
+                    <h5 class="mt-0 mb-1 text-primary">
+                        Notes : {{ eval.value }}
+                    </h5>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
 
-    {% for eval in bar.evaluations %}
-        <strong> {{ eval.value }} </strong>
-        <br>
-    {% endfor %}
-
-    </tr>
-    </tbody>
-</table>
-
-    <a href="{{ path('bars_index') }}">retour</a>
+    <a href="{{ path('bars_show', {'id': bar.id}) }}">retour</a>
 {% endblock %}

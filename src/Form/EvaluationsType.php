@@ -13,7 +13,6 @@ class EvaluationsType extends AbstractType
     {
         $builder
             ->add('Value')
-            ->add('Bar')
         ;
     }
 

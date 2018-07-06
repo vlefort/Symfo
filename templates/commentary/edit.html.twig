@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Hello{% endblock %}
+{% block description %} {% endblock %}
+{% block keywords %} {% endblock %}
+{% block body %}
+    <div class="container">
+        <h2>Commentaire actuel</h2>
+        <p>{{ commentary.message }}</p>
+
+        <H2>Modification du commentaire</H2>
+        <p> {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </p>
+    </div>
+{% endblock %}

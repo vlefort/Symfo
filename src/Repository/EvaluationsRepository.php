@@ -31,7 +31,19 @@ class EvaluationsRepository extends ServiceEntityRepository
         return $req->getSingleScalarResult();
     }
 
-    
+    public function findEvaluations($User, $Bar)
+    {
+        $req = $this->createQueryBuilder('i')
+            ->select("i")
+            ->Where('i.User = :User')
+            ->andWhere('i.Bar = :Bar')
+            ->setParameter('User', $User)
+            ->setParameter('Bar' , $Bar)
+            ->getQuery();
+
+        return $req->getOneOrNullResult();
+    }
+
 
 //    /**
 //     * @return Evaluations[] Returns an array of Evaluations objects

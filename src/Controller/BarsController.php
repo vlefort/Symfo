@@ -7,6 +7,7 @@ use App\Entity\Evaluations;
 use App\Entity\Commentary;
 use App\Form\BarsType;
 use App\Form\CommentType;
+use App\Form\EvaluationsType;
 use App\Repository\BarsRepository;
 use App\Repository\EvaluationsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -83,8 +84,8 @@ class BarsController extends Controller
      */
     public function show(Request $request, Bars $bar): Response
     {
-        $repo = $this->getDoctrine()->getRepository(Evaluations::class);
-        $eval_avg =$repo->findAllAverageEvaluation($bar);
+        $repositoryAverageEvaluations = $this->getDoctrine()->getRepository(Evaluations::class);
+        $eval_avg = $repositoryAverageEvaluations->findAllAverageEvaluation($bar);
 
 
         $commentaire = new Commentary();
@@ -93,9 +94,9 @@ class BarsController extends Controller
 
         $form = $this->createForm(CommentType::class, $commentaire);
         $form->handleRequest($request);
+
         // Si le form est valide j'envoie les données en base.
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $commentaire->setBar($bar);
 
             $repositoryCommentary = $this->getDoctrine()->getManager();
@@ -104,8 +105,34 @@ class BarsController extends Controller
             // J'envoie les données en base (INSERT INTO...)
             $repositoryCommentary->flush();
         }
-        return $this->render('bars/show.html.twig', ['bar' => $bar,"avgEvaluations" => $eval_avg, 'form'=> $form->createView()]);
+
+        $evaluation = new Evaluations();
+
+        $formeval = $this->createForm(EvaluationsType::class, $evaluation);
+        $formeval->handleRequest($request);
+
+        $repositoryFindEvaluations = $this->getDoctrine()->getRepository(Evaluations::class);
+        $evals = $repositoryFindEvaluations->findEvaluations($this->getUser(), $bar);
+
+        if ($formeval->isSubmitted() && $formeval->isValid()) {
+            if ($evals != null) {
+                $evals->setValue($evaluation->getValue());
+                $repositoryEvaluation = $this->getDoctrine()->getManager();
+                $repositoryEvaluation->persist($evals);
+                $repositoryEvaluation->flush();
+            } else {
+                $evaluation->setUser($this->getUser());
+                $evaluation->setBar($bar);
+                $repositoryEvaluation = $this->getDoctrine()->getManager();
+                $repositoryEvaluation->persist($evaluation);
+                $repositoryEvaluation->flush();
+            }
+        }
+            return $this->render('bars/show.html.twig', ['bar' => $bar, "avgEvaluations" => $eval_avg, 'form' => $form->createView(), 'formeval' => $formeval->createView()]);
     }
+
+
+
 
     /**
      * @Route("/show_evaluations/{id}", name="bars_show_evaluations", methods="GET")

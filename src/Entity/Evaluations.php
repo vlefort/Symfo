@@ -30,6 +30,13 @@ class Evaluations
     private $Bar;
 
     /**
+     * Many Evaluations have One User.
+     * @ORM\ManyToOne(targetEntity="App\Entity\Users", inversedBy="Evaluations")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $User;
+
+    /**
      * Evaluations constructor.
      */
     public function __construct()
