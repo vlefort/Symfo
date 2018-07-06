@@ -59,7 +59,7 @@ class AccountController extends Controller
             $em->flush();
             $message = (new \Swift_Message('Hello Email'))
                 ->setFrom('pierre@beaa.fr')
-                ->setTo('pierre2897@hotmail.fr')
+                ->setTo('nicolas.moniz@meilleureassurance.com')
                 ->setBody(
                     $this->renderView(
                         'emails/registration.html.twig',
