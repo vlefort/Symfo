@@ -79,6 +79,11 @@ class Commentary
         return $this;
     }
 
+    public function getBar()
+    {
+        return $this->bar;
+    }
+
     public function setBar($bar): self
     {
         $this->bar = $bar;

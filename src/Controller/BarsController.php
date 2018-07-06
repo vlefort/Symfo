@@ -92,6 +92,9 @@ class BarsController extends Controller
         return $this->render('bars/show.html.twig', ['bar' => $bar,"avgEvaluations" => $eval_avg, 'form'=> $form->createView()]);
     }
 
+
+
+
     /**
      * @Route("/show_evaluations/{id}", name="bars_show_evaluations", methods="GET")
      */

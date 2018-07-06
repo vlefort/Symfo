@@ -61,6 +61,9 @@
                         </h5>
                         <p>  {{ comment.message }} </p>
                         <span class="text-muted">Date de publication : le {{ comment.PublishDate|date("d/m/Y H\\hi") }}</span>
+                        {% if app.user == comment.auteur %}
+                            <button type="button" class="btn btn-primary"><a href="/Commentary/{{ comment.id }}/edit" class="edit-btn btn-primary">Modifier</a></button>
+                        {% endif %}
                     </div>
                 </li>
             {% endfor %}

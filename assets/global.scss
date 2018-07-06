@@ -21,7 +21,7 @@ $enable-rounded: true;
 }
 
 .comment-item {
-  transition: 0.3s linear;
+  transition: 0.2s linear;
 
   &:hover{
     transform: scale(1.05);
@@ -46,4 +46,32 @@ $enable-rounded: true;
 
 .commentary-item {
   margin-top: 3rem;
+}
+
+.btn-show {
+  background-color: #93c736;
+  color: #FFF;
+  padding: 0.3rem 1.4rem;
+  border-radius: 12px;
+  font-weight: bold;
+
+  &:hover {
+    color:white;
+  }
+}
+
+
+.btn-edit {
+  background-color: #e35418;
+  color: #FFF;
+  padding: 0.3rem 1.4rem;
+  border-radius: 12px;
+  font-weight: bold;
+  &:hover {
+    color:white;
+  }
+}
+
+.card-body {
+  padding: 1rem 0;
 }
