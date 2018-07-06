@@ -59,6 +59,12 @@ class Bars
 
     private $Evaluations;
 
+        /**
+     * @ORM\Column(type="date", length=255, nullable=true)
+     */
+
+    private $updateDate;
+
     /**
      * Bars constructor.
      */
@@ -73,6 +79,15 @@ class Bars
      * @ORM\JoinColumn(name="id_user", referencedColumnName="id")
      */
     private $user;
+
+
+    public function getUpdateDate(){
+        return $this->updateDate;
+    }
+
+    public function setUpdateDate($date){
+        $this->updateDate = $date;
+    }
 
 
     public function setUser($user){
@@ -149,12 +164,12 @@ class Bars
         return $this;
     }
 
-    public function getPhotos(): ?string
+    public function getPhotos()
     {
         return $this->Photos;
     }
 
-    public function setPhotos(?string $Photos): self
+    public function setPhotos($Photos)
     {
         $this->Photos = $Photos;
 

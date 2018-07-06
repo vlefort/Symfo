@@ -22,7 +22,13 @@
 {% for bar in bars %}
 
   <div class="card col-md-4 col-xs-6">
-     <img class="card-img-top img-fluid" src="https://source.unsplash.com/featured/" alt="Card image top">
+  
+  {# https://source.unsplash.com/featured/ #}
+
+<div class="max-height-photos">
+     <img class="card-img-top img-fluid" src="{{ asset('photos_bars/' ~ bar.Photos) }}" alt="Card image top">
+</div>
+
     <div class="card-body">
       <h5 class="card-title">{{ bar.Nom }}</h5>
       <p class="card-text">{{ bar.Alcools }} {{ bar.Adresse }}<br> </p>

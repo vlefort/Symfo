@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'fr'
+    photos_directory: '%kernel.project_dir%/public/photos_bars'
 
 services:
     # default configuration for services in *this* file
@@ -27,5 +28,12 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\EventSubscriber\UpdateBarsEvent:
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Services\UploadImg: 
+        arguments:
+            $directory: '%photos_directory%'
+        

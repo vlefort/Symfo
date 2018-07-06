@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
+use App\Services\UploadImg;
 
 /**
  * @Route("/bars")
@@ -25,14 +28,13 @@ class BarsController extends Controller
      */
     public function index(BarsRepository $barsRepository): Response
     {
-
         return $this->render('bars/index.html.twig', ['bars' => $barsRepository->findAll()]);
     }
 
     /**
      * @Route("/new", name="bars_new", methods="GET|POST")
      */
-    public function new(Request $request, BarsRepository $barsRepository): Response
+    public function new(Request $request, BarsRepository $barsRepository, UploadImg $uploadImg): Response
     {
         $bar = new Bars();
         $form = $this->createForm(BarsType::class, $bar);
@@ -40,20 +42,32 @@ class BarsController extends Controller
         $bars_already = false;
         
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $uploadImg->uploadPhoto($bar);
+
             $em = $this->getDoctrine()->getManager();
 
             $barsNom = $em->getRepository(Bars::class)->findByNom($bar->getNom());
 
-
             if(count($barsNom) > 0){
                 $bars_already = true;
             }else{
-               $bar->setUser($this->getUser());
+                $bar->setUser($this->getUser());
                 $em->persist($bar);
-                var_dump($bar);
-               $em->flush();
-               return $this->redirectToRoute('bars_index');
+                $em->flush();
+                    return $this->redirectToRoute('bars_index');
             }
+
+            /*   try
+               {
+                    $em->persist($bar);
+                    $em->flush();
+                    return $this->redirectToRoute('bars_index');
+               }
+                catch(Exception $e)
+               {
+                    $bars_already = true; 
+               }*/
         }
 
         return $this->render('bars/new.html.twig', [
@@ -63,8 +77,9 @@ class BarsController extends Controller
         ]);
     }
 
+
     /**
-     * @Route("/{id}", name="bars_show", methods="GET|POST")
+     * @Route("/{id}", name="bars_show", methods="GET")
      */
     public function show(Request $request, Bars $bar): Response
     {
@@ -103,8 +118,10 @@ class BarsController extends Controller
     /**
      * @Route("/{id}/edit", name="bars_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Bars $bar): Response
+    public function edit(Request $request, Bars $bar,UploadImg $uploadImg ): Response
     {
+        $uploadImg->newFile($bar);
+
         $this->denyAccessUnlessGranted(new Expression(
         'object.getUser() == user'), $bar);
 
@@ -112,8 +129,9 @@ class BarsController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $uploadImg->uploadPhoto($bar);
             $this->getDoctrine()->getManager()->flush();
-
+ 
             return $this->redirectToRoute('bars_edit', ['id' => $bar->getId()]);
         }
          return $this->render('bars/edit.html.twig', [
@@ -147,5 +165,7 @@ class BarsController extends Controller
         return $this->render('bars/index.html.twig', 
             ['bars' => $bars_recherche]);
     }
+
+
 
 }

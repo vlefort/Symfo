@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Bars;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-
+use Doctrine\ORM\Tools\Pagination\Paginator;
 /**
  * @method Bars|null find($id, $lockMode = null, $lockVersion = null)
  * @method Bars|null findOneBy(array $criteria, array $orderBy = null)
@@ -21,16 +21,16 @@ class BarsRepository extends ServiceEntityRepository
 
     public function findBarsWithKeyWord($key_word)
     {
-
         $req = $this->createQueryBuilder('b')
             ->andWhere('b.nom LIKE :key_word')
-            ->andWhere('b.Alcools LIKE :key_word')
-            ->andWhere('b.Adresse LIKE :key_word')
+            ->orWhere('b.Alcools LIKE :key_word')
+            ->orWhere('b.Adresse LIKE :key_word')
             ->setParameter('key_word', '%'.$key_word.'%')
             ->getQuery();
 
             return $req->getResult();
     }
+
 
 //    /**
 //     * @return Bars[] Returns an array of Bars objects

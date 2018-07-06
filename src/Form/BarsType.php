@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class BarsType extends AbstractType
 {
@@ -20,8 +21,7 @@ class BarsType extends AbstractType
             ->add('Diffusions', CheckboxType::class, array('label' => 'Diffusion des matchs','required' => false,))
             ->add('Terasse')
             ->add('Adresse')
-            ->add('Photos')
-        ;
+            ->add('Photos', FileType::class, array('label' => 'Photos (IMG file)'));
     }
 
     public function configureOptions(OptionsResolver $resolver)
