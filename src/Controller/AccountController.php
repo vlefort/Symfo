@@ -45,7 +45,7 @@ class AccountController extends Controller
     /**
      * @Route("/register", name="register", methods="GET|POST")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder,\Swift_Mailer $mailer)
     {
         $user = new Users();
         $form = $this->createForm(UsersType::class,$user);
@@ -57,13 +57,24 @@ class AccountController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-
+            $message = (new \Swift_Message('Hello Email'))
+                ->setFrom('pierre@beaa.fr')
+                ->setTo('pierre2897@hotmail.fr')
+                ->setBody(
+                    $this->renderView(
+                        'emails/registration.html.twig',
+                        array('user' => $user)
+                    ),
+                    'text/html')
+            ;
+            $mailer->send($message);
             return $this->redirectToRoute('bars_index');
         }
         return $this->render('account/register.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
+
     }
 
     /**

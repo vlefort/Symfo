@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Bars;
+use App\Entity\Commentary;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +21,6 @@ class BarsType extends AbstractType
             ->add('Terasse')
             ->add('Adresse')
             ->add('Photos')
-            ->add('Commentaires')
         ;
     }
 

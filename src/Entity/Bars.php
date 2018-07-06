@@ -48,7 +48,7 @@ class Bars
     private $Photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="Commentary", mappedBy="bar")
+     * @ORM\OneToMany(targetEntity="Commentary", mappedBy="bar",cascade={"persist"})
      */
     private $Commentaires;
 
